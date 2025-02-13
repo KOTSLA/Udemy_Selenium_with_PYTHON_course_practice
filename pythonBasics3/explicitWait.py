@@ -11,20 +11,20 @@ driver.implicitly_wait(2)
 
 driver.find_element(By.CSS_SELECTOR, ".search-keyword").send_keys("ber")
 time.sleep(2)
-impectidProduktList = ["Cucumber - 1 Kg", "Raspberry - 1/4 Kg", "Strawberry - 1/4 Kg"]
 
+expectedProduktList = ["Cucumber - 1 Kg", "Raspberry - 1/4 Kg", "Strawberry - 1/4 Kg"]
+actualList = []
 productNameList = driver.find_elements(By.XPATH, "//div[@class='products']/div/h4")
-
-productNames = [product.text for product in productNameList]
-print(productNames)
-assert impectidProduktList == productNames
+for productName in productNameList:
+    actualList.append(productName.text)
+print(actualList)
+assert expectedProduktList == actualList
 
 
 results = driver.find_elements(By.XPATH, "//div[@class='products']/div")    #parent element
 count = len(results)
 print(count)
 assert count == 3
-
 for result in results:
     result.find_element(By.XPATH, "div/button").click()  #child element
 
